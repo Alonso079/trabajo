@@ -1,0 +1,23 @@
+RewriteEngine On
+
+# No mostrar índices de directorio
+Options -Indexes
+
+# Definir la página de inicio predeterminada
+DirectoryIndex php/login.php
+
+# Remover la extensión .php para archivos existentes
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
+
+# Excluir directorios y tipos de archivos específicos de las reglas de reescritura
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(css|js|imagenes|recursos)/
+
+# Redirigir todas las solicitudes que no sean para archivos reales o directorios a index.php
+RewriteRule ^ index.php [L]
+
+# Manejo de errores personalizado
+ErrorDocument 404 /path-to-your-404-page.php
+
